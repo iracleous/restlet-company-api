@@ -2,6 +2,7 @@ package gr.codehub.restapi.repository.lib;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +16,18 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
 
     @Override
     public Optional<T> findById(K id) {
-        T t = entityManager.find(getEntityClass(), id);
-        return t != null ? Optional.of(t) : Optional.empty();
+        try {
+            entityManager.getTransaction().begin();
+            T t = entityManager.find(getEntityClass(), id);
+            entityManager.getTransaction().commit();
+            return Optional.of(t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+
+
+
     }
 
     /**
@@ -40,7 +51,8 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
 
     @Override
     public List<T> findAll() {
-        return entityManager.createQuery("from " + getEntityClassName()).getResultList();
+        TypedQuery<T> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
+        return query.getResultList();
     }
 
 
@@ -52,7 +64,7 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
     /**
      * Deleting a persistent instance
      *
-     * @param id
+     * @param id  primary key
      * @return success
      */
     @Override

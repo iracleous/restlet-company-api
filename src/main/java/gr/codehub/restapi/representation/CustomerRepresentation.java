@@ -37,7 +37,7 @@ public class CustomerRepresentation {
         customerRepresentation.setName(customer.getName());
         customerRepresentation.setDob(customer.getDob());
         customerRepresentation.setCategory(customer.getCategory());
-
+        customerRepresentation.setUri("http://localhost:9000/app/customer/"+customer.getId());
         return customerRepresentation;
     }
 

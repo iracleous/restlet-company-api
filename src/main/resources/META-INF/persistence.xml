@@ -17,7 +17,7 @@
             <property name="javax.persistence.jdbc.password" value="passw0rd" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
             <property name="hibernate.show_sql" value="true"/>
         </properties>
 
