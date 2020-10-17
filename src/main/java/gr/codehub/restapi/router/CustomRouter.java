@@ -1,5 +1,6 @@
 package gr.codehub.restapi.router;
 
+import gr.codehub.restapi.resource.PingServerResource;
 import gr.codehub.restapi.resource.impl.CustomerListResourceImpl;
 import gr.codehub.restapi.resource.impl.CustomerResourceImpl;
 import org.restlet.Application;
@@ -27,6 +28,11 @@ public class CustomRouter {
         return router;
     }
 
+    public Router publicResources() {
+        Router router = new Router();
+        router.attach("/ping", PingServerResource.class);
+        return router;
+    }
 
 
 }

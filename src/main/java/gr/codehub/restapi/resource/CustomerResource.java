@@ -17,7 +17,7 @@ public interface CustomerResource {
     public void remove() throws NotFoundException;
 
     @Put("json")
-    public CustomerRepresentation store(CustomerRepresentation customerReprIn)
+    public CustomerRepresentation update(CustomerRepresentation customerReprIn)
             throws NotFoundException, BadEntityException;
 
 
