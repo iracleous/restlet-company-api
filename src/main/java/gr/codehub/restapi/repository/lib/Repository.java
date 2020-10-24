@@ -25,9 +25,6 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
             e.printStackTrace();
         }
         return Optional.empty();
-
-
-
     }
 
     /**
@@ -55,8 +52,6 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
         return query.getResultList();
     }
 
-
-
     public abstract Class<T> getEntityClass();
 
     public abstract String getEntityClassName();
@@ -64,7 +59,7 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
     /**
      * Deleting a persistent instance
      *
-     * @param id  primary key
+     * @param id primary key
      * @return success
      */
     @Override
@@ -84,5 +79,4 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
         }
         return false;
     }
-
 }

@@ -20,27 +20,21 @@ import java.util.logging.Logger;
 
 public class RestApplication extends Application {
 
-
     public static final Logger LOGGER = Engine.getLogger(RestApplication.class);
 
-
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Contacts application starting...");
-
+        LOGGER.info("CRM application starting...");
         EntityManager em = JpaUtil.getEntityManager();
         em.close();
-
 
         Component c = new Component();
         c.getServers().add(Protocol.HTTP, 9000);
         c.getDefaultHost().attach("/app", new RestApplication());
         c.start();
 
-        LOGGER.info("Sample Web API started");
-        LOGGER.info("URL: http://localhost:9000/app/customer/1");
-
+        LOGGER.config("Sample Web API started");
+        LOGGER.fine("URL: http://localhost:9000/app/customer/1");
     }
-
 
     public RestApplication() {
 
@@ -49,34 +43,24 @@ public class RestApplication extends Application {
 
         getRoles().add(new Role(this, CustomRole.ROLE_ADMIN.getRoleName()));
         getRoles().add(new Role(this, CustomRole.ROLE_OWNER.getRoleName()));
-        getRoles().add(new Role(this,  CustomRole.ROLE_USER.getRoleName()));
+        getRoles().add(new Role(this, CustomRole.ROLE_USER.getRoleName()));
 
     }
-
-
 
     @Override
     public Restlet createInboundRoot() {
 
         CustomRouter customRouter = new CustomRouter(this);
         Shield shield = new Shield(this);
+        CustomCorsFilter corsFilter = new CustomCorsFilter(this);
 
-        Router publicRouter = customRouter.publicResources();
         ChallengeAuthenticator apiGuard = shield.createApiGuard();
-        // Create the api router, protected by a guard
-
+        Router publicRouter = customRouter.publicResources();
         Router apiRouter = customRouter.createApiRouter();
-        apiGuard.setNext(apiRouter);
 
         publicRouter.attachDefault(apiGuard);
+        apiGuard.setNext(apiRouter);
 
-        // return publicRouter;
-
-        CustomCorsFilter corsFilter = new CustomCorsFilter(this);
         return corsFilter.createCorsFilter(publicRouter);
-
-
     }
-
-
 }

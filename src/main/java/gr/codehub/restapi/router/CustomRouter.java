@@ -1,8 +1,7 @@
 package gr.codehub.restapi.router;
 
 import gr.codehub.restapi.resource.PingServerResource;
-import gr.codehub.restapi.resource.impl.CustomerListResourceImpl;
-import gr.codehub.restapi.resource.impl.CustomerResourceImpl;
+import gr.codehub.restapi.resource.impl.*;
 import org.restlet.Application;
 import org.restlet.routing.Router;
 
@@ -12,9 +11,7 @@ public class CustomRouter {
 
     public CustomRouter(Application application) {
         this.application = application;
-
     }
-
 
     public Router createApiRouter() {
 
@@ -22,9 +19,13 @@ public class CustomRouter {
 
         router.attach("/customer/{id}", CustomerResourceImpl.class);
         router.attach("/customer", CustomerListResourceImpl.class);
-        router.attach("/customer/", CustomerListResourceImpl.class);
+
+        router.attach("/product/{id}", ProductResourceImpl.class);
+        router.attach("/product",  ProductListResourceImpl.class);
 
 
+        router.attach("/basket",  BasketResourceImpl.class);
+        router.attach("/basket/{id}",  BasketResourceImpl.class);
         return router;
     }
 
@@ -33,6 +34,4 @@ public class CustomRouter {
         router.attach("/ping", PingServerResource.class);
         return router;
     }
-
-
 }

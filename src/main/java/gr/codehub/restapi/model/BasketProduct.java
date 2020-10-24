@@ -1,16 +1,11 @@
 package gr.codehub.restapi.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter @Getter
 @Entity
 public class BasketProduct {
     @Id
@@ -23,5 +18,4 @@ public class BasketProduct {
     private Basket basket;
     @ManyToOne
     private Product product;
-
 }
